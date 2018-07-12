@@ -1,15 +1,64 @@
 angular.module('app.controllers', [])
   
-.controller('agendaCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {
+.controller('agendaCtrl', [ '$scope',  '$stateParams','$ionicModal','agendaApi', 
+function  ($scope, $stateParams, $ionicModal, $agendaApi) {
     
-    var _contatos = [
-        {nome: 'Paulo Rogerio', telefone:'2761-0956', favoritos: false},
-        {nome: 'Agatha', telefone:'3356-0933', favoritos: false},
-        {nome: 'Fernanda', telefone:'2561-5400', favoritos: true},
-        ];
+    
+    var contatos =[];
+    $scope.permitirExcluir = false;
+    
+     $scope.habilitarExclusao = function (){
+       $scope.permitirExcluir =! $scope.permitirExcluir
+     }
 
-    
-       $scope.contatos = _contatos;
+       function obterObeterContatos(){
+         contatos = $agendaApi.getContatos();
+         $scope.contatos = contatos;
+
+         return contatos;
+       }
+
+       obterObeterContatos();
+
+
+        $scope.abrirTelaContato = function(){
+            $scope.contato = {nome: '', telefone: '', favorito: false};
+            $scope.openModal();
+ }
+
+        $scope.cancelarContato = function () {
+          $scope.closeModal();
+
+        }      
+
+        $scope.salvarContato = function(contato){
+          $agendaApi.addContato(contato);
+
+          obterObeterContatos();
+
+          $scope.closeModal();
+        }
+
+        $scope.excluirContato = function (contato){
+          $agendaApi.deleteContato(contato);
+          obterObeterContatos();
+        }
+
+       // modal inicia 
+       $ionicModal.fromTemplateUrl('contato.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        $scope.modal = modal;
+      });
+      $scope.openModal = function() {
+        $scope.modal.show();
+      };
+      $scope.closeModal = function() {
+        $scope.modal.hide();
+      };
+     
+
    
 }])
    

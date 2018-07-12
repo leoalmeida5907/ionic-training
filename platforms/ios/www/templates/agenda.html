@@ -1,0 +1,38 @@
+<ion-view title="Agenda" id="page1">
+  <ion-content padding="true" class="has-header" ng-controller="agendaCtrl" > 
+
+    <form id="agenda-form1" class="list">
+      <label class="item item-input" id="agenda-input1">
+        <input type="text" placeholder="Pesquisar ">
+      </label>
+    </form>
+    <div class="spacer" style="width: 300px; height: 29px;"></div>
+    <form id="agenda-form2" class="list">
+      <ion-toggle toggle-class="toggle-positive" id="agenda-toggle1">Favoritos </ion-toggle>
+    </form>
+    <div class="spacer" style="width: 300px; height: 15px;"></div>
+
+    <ion-list id="agenda-list1">
+      <ion-item class="item-icon-left positive" id="agenda-list-item2" ng-repeat="contatos in contatos"> 
+        <i class="icon ion-ios-contact-outline"></i> {{contatos.nome}}<br>
+        <i class="icon ion-ios-contact-outline"></i> {{contatos.telefone}}<br>
+      </ion-item>
+
+    </ion-list>
+   <button class="button button-block button-positive"> Novo </button>
+
+   
+     <script id="my-modal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+      <h1 class="title">Novo Contato </h1>
+    </ion-header-bar>
+    <ion-content>
+      Hello!
+    </ion-content>
+  </ion-modal-view>
+</script>
+    </script>
+
+  </ion-content>
+</ion-view>
